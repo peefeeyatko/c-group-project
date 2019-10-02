@@ -36,6 +36,7 @@
 void print_menu(void);
 int encrypt_image();
 int decrypt_image();
+int update_password(void);
 int compress_to_zip(void);
 void help_menu(void);
 
@@ -59,16 +60,18 @@ int main(void)
                 break;
             case 3:
                 if (compress_to_zip() == 1) {
-                    printf("\nSuccess: encrypted_imgs.zip created\n");
+                    printf("\n"
+                        "Success: encrypted_imgs.zip created\n"
+                    );
                 } else {
-                    printf("\nError: Something went wrong\n");
+                    printf("\n"
+                        "Error: Something went wrong\n"
+                    );
                 }
                 break;
             case 4:
                 break;
             case 5:
-                help_menu();
-                break;
             default:
                 help_menu();
                 break;
@@ -136,6 +139,19 @@ int compress_to_zip(void)
 }
 
 /*******************************************************************************
+ * This function will prompt the user to enter a new password and then save it
+ * in an encrypted form to a text file named database.
+ * inputs:
+ * - none
+ * outputs:
+ * - 1 for success or 0 for failure
+*******************************************************************************/
+int update_password(void)
+{
+    return 0;
+}
+
+/*******************************************************************************
  * This function will take an image file and then encrypt the file.
  * inputs:
  * - BMP file
@@ -148,9 +164,9 @@ int encrypt_image()
 }
 
 /*******************************************************************************
- * This function will take an encrypted file and then decrypt.
+ * This function will take an encrypted file and then decrypt it.
  * inputs:
- * - encrypted file
+ * - encrypted BMP file
  * outputs:
  * - 1 for success or 0 for failure
 *******************************************************************************/
