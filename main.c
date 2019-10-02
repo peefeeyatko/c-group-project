@@ -21,7 +21,7 @@
 /*******************************************************************************
  * List preprocessing directives
 *******************************************************************************/
-#define ENCRYPTED_DIR "./encrypted"
+#define ENCRYPTED_DIR "./encrypted_images"
 #define IMAGES_DIR "./images"
 #define PASSWORD "database"
 
@@ -58,6 +58,11 @@ int main(void)
             case 2:
                 break;
             case 3:
+                if (compress_to_zip() == 1) {
+                    printf("\nSuccess: encrypted_imgs.zip created\n");
+                } else {
+                    printf("\nError: Something went wrong\n");
+                }
                 break;
             case 4:
                 break;
@@ -118,6 +123,15 @@ void help_menu(void)
 *******************************************************************************/
 int compress_to_zip(void)
 {
+    char cmd[99] = "zip -r encrypted_imgs.zip ";
+    strcat(cmd, ENCRYPTED_DIR);
+    
+    int flag = system(cmd);
+
+    if (flag == 0) {
+        return 1;
+    }
+
     return 0;
 }
 
