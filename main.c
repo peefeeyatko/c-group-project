@@ -23,6 +23,7 @@
 *******************************************************************************/
 #define ENCRYPTED_DIR "./encrypted_images"
 #define IMAGES_DIR "./images"
+#define ZIP_DIR "encrypted_imgs.zip"
 #define PASSWORD "database"
 
 /*******************************************************************************
@@ -61,7 +62,7 @@ int main(void)
             case 3:
                 if (compress_to_zip() == 1) {
                     printf("\n"
-                        "Success: encrypted_imgs.zip created\n"
+                        "Success: %s created\n", ZIP_DIR
                     );
                 } else {
                     printf("\n"
@@ -95,8 +96,8 @@ int main(void)
 void print_menu(void)
 {
     printf("\n"
-           "1. encrypt image(s)\n"
-           "2. decrypt images(s)\n"
+           "1. run encryption\n"
+           "2. run decryption\n"
            "3. compress to ZIP\n"
            "4. update password\n"
            "5. view help\n"
@@ -126,7 +127,9 @@ void help_menu(void)
 *******************************************************************************/
 int compress_to_zip(void)
 {
-    char cmd[99] = "zip -r encrypted_imgs.zip ";
+    char cmd[99] = "zip -r ";
+    strcat(cmd, ZIP_DIR);
+    strcat(cmd, " ");
     strcat(cmd, ENCRYPTED_DIR);
     
     int flag = system(cmd);
