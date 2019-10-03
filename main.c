@@ -39,8 +39,8 @@ void print_menu(void);
 int encrypt_image();
 int decrypt_image();
 int update_password(void);
-char* get_password_from_file();
-char* encrypt_password(const char password[PASSWORD_MAX_LEN]);
+char* get_password_from_file(void);
+char* encrypt_password(const char password[PASSWORD_MAX_LEN + 1]);
 int compress_to_zip(void);
 void help_menu(void);
 
@@ -202,7 +202,7 @@ int update_password(void)
  * outputs:
  * - password as encrypted string
 *******************************************************************************/
-char* get_password_from_file()
+char* get_password_from_file(void)
 {
     char filename[50], ext[10];
 
