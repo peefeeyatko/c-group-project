@@ -25,6 +25,7 @@
 #define IMAGES_DIR "./images"
 #define ZIP_DIR "encrypted_imgs.zip"
 #define PASSWORD "database"
+#define PASSWORD_MAX_LEN 15
 
 /*******************************************************************************
  * List structs
@@ -38,6 +39,8 @@ void print_menu(void);
 int encrypt_image();
 int decrypt_image();
 int update_password(void);
+char* get_password_from_file();
+char* encrypt_password(const char password[PASSWORD_MAX_LEN]);
 int compress_to_zip(void);
 void help_menu(void);
 
@@ -71,6 +74,11 @@ int main(void)
                 }
                 break;
             case 4:
+                if (update_password() == 1) {
+                    printf("Success: password updated!\n");
+                } else {
+                    printf("Error: incorrect password!\n");
+                }
                 break;
             case 5:
             default:
@@ -119,7 +127,7 @@ void help_menu(void)
 }
 
 /*******************************************************************************
- * This function will compress the ENCYPTED_DIR and create a single ZIP file.
+ * This function will compress the ENCRYPTED_DIR and create a single ZIP file.
  * inputs:
  * - none
  * outputs:
@@ -151,7 +159,107 @@ int compress_to_zip(void)
 *******************************************************************************/
 int update_password(void)
 {
+    char user_input[PASSWORD_MAX_LEN + 1];
+    
+    printf("Enter old password> ");
+    scanf("%s", user_input);
+
+    char* encrypted_user_input = encrypt_password(user_input);
+    char* password = get_password_from_file();
+
+    if (strcmp(password, encrypted_user_input) == 0) {
+        /* prompt for new password, encrypt it and then save to file */
+        char user_input[PASSWORD_MAX_LEN + 1];
+
+        printf("Enter new password> ");
+        scanf("%s", user_input);
+
+        char filename[50], ext[10];
+
+        strcpy(filename, PASSWORD);
+        strcpy(ext, ".txt");
+        strcat(filename, ext);
+
+        FILE* file = fopen(filename, "w+");
+
+        if (file) {
+            fprintf(file, encrypt_password(user_input));
+            fprintf(file, "\n");
+        }
+
+        fclose(file);
+
+        return 1;
+    }
+
     return 0;
+}
+
+/*******************************************************************************
+ * This function will return the encrypted password from a text file named database
+ * inputs:
+ * - none
+ * outputs:
+ * - password as encrypted string
+*******************************************************************************/
+char* get_password_from_file()
+{
+    char filename[50], ext[10];
+
+    strcpy(filename, PASSWORD);
+    strcpy(ext, ".txt");
+    strcat(filename, ext);
+
+    FILE* file = fopen(filename, "r");
+    char* password;
+    password = malloc(sizeof(char) * PASSWORD_MAX_LEN + 1);
+
+    char ch;
+    int i = 0;
+    for (ch = fgetc(file); ch != '\n'; ch = fgetc(file)) {
+        password[i] = ch;
+        i++;
+    }
+
+    fclose(file);
+
+    return password;
+}
+
+/*******************************************************************************
+ * This function will convert a plain text string to an encypted string using
+ * a ciper algorithm.
+ * inputs:
+ * - const char password[PASSWORD_MAX_LEN]
+ * outputs:
+ * - password as encrypted string
+*******************************************************************************/
+char* encrypt_password(const char password[PASSWORD_MAX_LEN + 1])
+{
+    char letters[] = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+-*/.()@&#%$€:;!?,";
+    char* password_encrypted;
+    password_encrypted = malloc(sizeof(char) * PASSWORD_MAX_LEN + 1);
+
+    int i;
+
+    for (i = 0; i < 15; i++) {
+        int a;
+
+        for (a = 0; a < 80; a++) {
+
+            if (password[i] == letters[a]) {
+                int q = a + 8;
+
+                if (q > 79) {
+                    q -= 80;
+                }
+
+                password_encrypted[i] = letters[q];
+            }
+        }
+    }
+
+    return password_encrypted;
 }
 
 /*******************************************************************************
