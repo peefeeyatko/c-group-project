@@ -17,13 +17,14 @@
 #include <stdio.h>
 #include <string.h>
 #include <stdlib.h>
+#include "encryption.h"
 
 /*******************************************************************************
  * List preprocessing directives
 *******************************************************************************/
-#define ENCRYPTED_DIR "./encrypted_images"
-#define IMAGES_DIR "./images"
-#define ZIP_DIR "encrypted_imgs.zip"
+#define ENCRYPTED_DIR "./encrypted_images/"
+#define IMAGES_DIR "./images/"
+#define ZIP_FILE "encrypted_imgs.zip"
 #define PASSWORD "database"
 #define PASSWORD_MAX_LEN 15
 
@@ -59,13 +60,14 @@ int main(void)
 
         switch (user_input) {
             case 1:
+                encrypt_image();
                 break;
             case 2:
                 break;
             case 3:
                 if (compress_to_zip() == 1) {
                     printf("\n"
-                        "Success: %s created\n", ZIP_DIR
+                        "Success: %s created\n", ZIP_FILE
                     );
                 } else {
                     printf("\n"
@@ -146,7 +148,7 @@ void help_menu(void)
 int compress_to_zip(void)
 {
     char cmd[99] = "zip -r ";
-    strcat(cmd, ZIP_DIR);
+    strcat(cmd, ZIP_FILE);
     strcat(cmd, " ");
     strcat(cmd, ENCRYPTED_DIR);
     
@@ -279,6 +281,11 @@ char* encrypt_password(const char password[PASSWORD_MAX_LEN + 1])
 *******************************************************************************/
 int encrypt_image()
 {
+    char filename[99] = IMAGES_DIR;
+    strcat(filename, "lena_gray.bmp");
+
+    readFile(filename);
+
     return 0;
 }
 
