@@ -1,6 +1,6 @@
 /*******************************************************************************
  * 48430 Fundamentals of C Programming - Assignment 3
- * Name(s): MARSHALL SUTTON, CLEMENT MUTEZ, AIDAN LEE, AMMAR CHOWDHURY, DAVID AZOULAY
+ * Name(s): MARSHALL SUTTON, CLEMENT MUTEZ, AIDAN LEE, DAVID AZOULAY
  * Student ID: 13583378
  * Date of submission:
  * A brief statement on what you could achieve (less than 50 words):
@@ -198,7 +198,6 @@ int update_password(void)
         }
 
         fclose(file);
-
         return 1;
     }
 
@@ -232,15 +231,14 @@ char* get_password_from_file(void)
     }
 
     fclose(file);
-
     return password;
 }
 
 /*******************************************************************************
  * This function will convert a plain text string to an encypted string using
- * a ciper algorithm.
+ * a cipher algorithm.
  * inputs:
- * - const char password[PASSWORD_MAX_LEN]
+ * - const char password[PASSWORD_MAX_LEN + 1]
  * outputs:
  * - password as encrypted string
 *******************************************************************************/
