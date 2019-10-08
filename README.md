@@ -22,3 +22,9 @@ Our solution to this problem will involve creating a C program to encrypt BMP im
 
 
 ### Project Instructions:
+
+    1. Git clone project or download ZIP
+    2. `cd c-group-project`
+    3. compile `make`
+    4. run `./main.out`
+
