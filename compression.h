@@ -1,16 +1,13 @@
-#include <math.h>
-#include <stdio.h>
+#include <stdlib.h>
 #include <string.h>
 
 /*******************************************************************************
  * List preprocessing directives
 *******************************************************************************/
-#define IMAGES_DIR "./images/"
+#define ENCRYPTED_DIR "./encrypted_images/"
+#define ZIP_FILE "encrypted_imgs.zip"
 
 /*******************************************************************************
  * Function prototypes 
 *******************************************************************************/
-int encrypt_image();
-int decrypt_image();
-void readFile(const char filename[99]);
-int convertEndianToInt(const int tab[4]);
+int compress_to_zip(void);
