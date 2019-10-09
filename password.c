@@ -34,9 +34,8 @@ int update_password(void)
 
         FILE *file = fopen(filename, "w+");
 
-        if (file)
-        {
-            fprintf(file, encrypt_password(user_input));
+        if (file) {
+            fprintf(file, "%s", encrypt_password(user_input));
             fprintf(file, "\n");
         }
 

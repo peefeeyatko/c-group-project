@@ -1,11 +1,11 @@
 #include <stdlib.h>
 #include <string.h>
+#include "encryption.h"
 
 /*******************************************************************************
  * List preprocessing directives
 *******************************************************************************/
-#define ENCRYPTED_DIR "./encrypted_images/"
-#define ZIP_FILE "encrypted_imgs.zip"
+#define ZIP_FILE "encrypted.zip"
 
 /*******************************************************************************
  * Function prototypes 

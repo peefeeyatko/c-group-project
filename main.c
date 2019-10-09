@@ -37,6 +37,7 @@ int main(void)
                 encrypt_image();
                 break;
             case 2:
+                decrypt_image();
                 break;
             case 3:
                 if (compress_to_zip() == 1) {
