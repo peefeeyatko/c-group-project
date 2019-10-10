@@ -16,7 +16,7 @@ void WriteDecryptedFile(char filename[], int *file, int size, int keynumber);
 int *readFile(char filename[], int size)
 {
     int *arrayfinal = NULL;           /*to initialize*/
-    int i, l, m;                      /*for the loop*/
+    int i, l;                      /*for the loop*/
     FILE *fp = fopen(filename, "rb"); /*to open the file in read mode*/
     if (fp == NULL)
     {
@@ -37,26 +37,6 @@ int *readFile(char filename[], int size)
             fread(&arrayfinal[l], 1, 1, fp);
             /*to put each value of the bmp image in the array*/
         }
-        /*under this is just to print the image but it is not useful for the program*/
-        printf("HEADER\n");
-        for (m = 0; m < 14; m++)
-        {
-            printf("%d ", arrayfinal[m]);
-        }
-        printf("\n");
-        printf("HEADER INFOS\n");
-        for (m = 14; m < 54; m++)
-        {
-            printf("%d ", arrayfinal[m]);
-        }
-        printf("\n");
-        printf("IMAGE\n");
-        for (m = 54; m < size; m++)
-        {
-            printf("%d ", arrayfinal[m]);
-        }
-        printf("the size is : %d\n", size);
-        printf("\n");
     }
     fclose(fp);
     return arrayfinal; /*return the array that contain the value of the image*/
@@ -112,11 +92,7 @@ void WriteEncryptedFile(char filename[], int *file, int size, int keynumber)
     int i;
     int *keybit = ConvertirIntToBit(keynumber); /*creates a keybit to encrypt the document*/
     int array[size];
-    for (i = 0; i < 8; i++)
-    {
-        printf("%d value of key bit is : %d\n", i, keybit[i]);
-    }
-    printf("\n");
+
     FILE *fp = fopen(filename, "wb"); /*to open the file in write mode*/
     if (fp == NULL)
     {
@@ -139,10 +115,11 @@ void WriteEncryptedFile(char filename[], int *file, int size, int keynumber)
                                          /*so this loop take the value file[i], convert it in bit, add it to the keybit, and out the result in the file*/
             free(tempbit);
             free(tempbit2);
-            /*tempbit = NULL;
-		    tempbit2 = NULL;*/
         }
+
+        printf("Success: /%s created!\n", filename);
     }
+
     fclose(fp);
 }
 
@@ -174,7 +151,10 @@ void WriteDecryptedFile(char filename[], int *file, int size, int keynumber)
             free(tempbit);
             free(tempbit2);
         }
+
+        printf("Success: /%s created!\n", filename);
     }
+    
     fclose(fp);
 }
 
@@ -266,46 +246,71 @@ int *AddTwoBit(int *bit1, int *bit2)
 }
 
 /*******************************************************************************
- * This function will take an image file and then encrypt the file.
+ * This function will take an image file and then encrypt it and output it 
+ * to the encrypted directory.
  * inputs:
- * - BMP file
+ * - BMP image file
  * outputs:
- * - 1 for success or 0 for failure
+ * - encrypted BMP image file
 *******************************************************************************/
 void encrypt_image()
 {
-    char filename[99] = IMAGES_DIR;
-    strcat(filename, "coco.bmp");
+    char filename[50];
+    printf("Enter the filename (with extension) of an image to encrypt>\n");
+    scanf("%s", filename);
 
-    int size = ReadSize(filename);
+    char input_path[99] = IMAGES_DIR;
+    strcat(input_path, filename);
 
-    char path[99] = ENCRYPTED_DIR;
-    strcat(path, "coco.bmp");
+    FILE *file = fopen(input_path, "r");
 
-    int *array = readFile(filename, size);
-    WriteEncryptedFile(path, array, size, 200);
+    if (file) {
+        int size = ReadSize(input_path);
+
+        char output_path[99] = ENCRYPTED_DIR;
+        strcat(output_path, filename);
+
+        int *array = readFile(input_path, size);
+        WriteEncryptedFile(output_path, array, size, 200);
+    } else {
+        printf("Error: Could not open the file /%s\n", input_path);
+        printf("Have you created an 'images' folder?\n");
+    }
+
+    fclose(file);
 }
 
 /*******************************************************************************
- * This function will take an encrypted file and then decrypt it.
+ * This function will take an encrypted file and then decrypt it and output 
+ * it to the decrypted directory.
  * inputs:
- * - encrypted BMP file
+ * - encrypted BMP image file
  * outputs:
- * - 1 for success or 0 for failure
+ * - decrypted BMP image file
 *******************************************************************************/
 void decrypt_image()
 {
-    char path[99] = ENCRYPTED_DIR;
-    char filename[99] = "coco.bmp";
-    strcat(path, filename);
+    char filename[50];
+    printf("Enter the filename (with extension) of an image to decrypt>\n");
+    scanf("%s", filename);
 
-    int size2 = ReadSize(path);
-    int *array2 = readFile(path, size2);
+    char input_path[99] = ENCRYPTED_DIR;
+    strcat(input_path, filename);
 
-    char destination[99] = DECRYPTED_DIR;
-    strcat(destination, filename);
+    FILE *file = fopen(input_path, "r");
 
-    printf("%s\n", destination);
+    if (file) {
+        int size2 = ReadSize(input_path);
+        int *array2 = readFile(input_path, size2);
 
-    WriteDecryptedFile(destination, array2, size2, 200);
+        char output_path[99] = DECRYPTED_DIR;
+        strcat(output_path, filename);
+
+        WriteDecryptedFile(output_path, array2, size2, 200);
+    } else {
+        printf("Error: Could not open the file /%s\n", input_path);
+        printf("Have you created an 'encrypted' folder?\n");
+    }
+
+    fclose(file);
 }

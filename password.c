@@ -1,6 +1,30 @@
 #include "password.h"
 
 /*******************************************************************************
+ * This function will prompt the user to enter the password
+ * inputs:
+ * - none
+ * outputs:
+ * - 1 for success or 0 for failure
+*******************************************************************************/
+int password_prompt(void)
+{
+    char user_input[PASSWORD_MAX_LEN + 1];
+
+    printf("Enter password> ");
+    scanf("%s", user_input);
+
+    char *encrypted_user_input = encrypt_password(user_input);
+    char *password = get_password_from_file();
+
+    if (strcmp(password, encrypted_user_input) == 0) {
+        return 1;
+    }
+
+    return 0;
+}
+
+/*******************************************************************************
  * This function will prompt the user to enter a new password and then save it
  * in an encrypted form to a text file named database.
  * inputs:
@@ -18,8 +42,7 @@ int update_password(void)
     char *encrypted_user_input = encrypt_password(user_input);
     char *password = get_password_from_file();
 
-    if (strcmp(password, encrypted_user_input) == 0)
-    {
+    if (strcmp(password, encrypted_user_input) == 0) {
         /* prompt for new password, encrypt it and then save to file */
         char user_input[PASSWORD_MAX_LEN + 1];
 

@@ -37,16 +37,20 @@ int main(void)
                 encrypt_image();
                 break;
             case 2:
-                decrypt_image();
+                if (password_prompt() == 1) {
+                    decrypt_image();
+                } else {
+                    printf("Error: incorrect password!\n");
+                }
                 break;
             case 3:
                 if (compress_to_zip() == 1) {
                     printf("\n"
-                        "Success: %s created\n", ZIP_FILE
+                        "Success: %s created.\n", ZIP_FILE
                     );
                 } else {
                     printf("\n"
-                        "Error: Something went wrong\n"
+                        "Error: Something went wrong.\n"
                     );
                 }
                 break;

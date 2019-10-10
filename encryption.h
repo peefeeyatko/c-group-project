@@ -6,9 +6,9 @@
 /*******************************************************************************
  * List preprocessing directives
 *******************************************************************************/
-#define IMAGES_DIR "./images/"
-#define ENCRYPTED_DIR "./encrypted/"
-#define DECRYPTED_DIR "./decrypted/"
+#define IMAGES_DIR "images/"
+#define ENCRYPTED_DIR "encrypted/"
+#define DECRYPTED_DIR "decrypted/"
 
 /*******************************************************************************
  * Function prototypes 
