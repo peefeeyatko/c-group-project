@@ -1,3 +1,6 @@
 *.out
 .DS_Store
 encrypted.zip
+encrypted/*
+decrypted/*
+
