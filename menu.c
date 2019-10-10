@@ -40,5 +40,5 @@ void help_menu(void)
         "   and it's contents.\n\n"
         "4. Update password allows a user to change password after entering the\n"
         "   old password and saves the new password in an encrypted form to\n"
-        "   database.txt\n");
+        "   database.txt (the default password is \"password\")\n");
 }
