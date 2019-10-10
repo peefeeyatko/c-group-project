@@ -23,8 +23,11 @@ Our solution to this problem will involve creating a C program to encrypt BMP im
 
 ### Project Instructions:
 
-1. git clone project or download ZIP
+1. git clone project or download ZIP [https://github.com/peefeeyatko/c-group-project]
 2. `cd c-group-project`
+3. check if the `/images` diretory exists, if not create one
+3. check if the `/encrypted` diretory exists, if not create one
+3. check if the `/decrypted` diretory exists, if not create one
 3. to compile type command `make`
 4. to run executable type command `./main.out`
 
