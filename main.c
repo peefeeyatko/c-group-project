@@ -2,12 +2,7 @@
  * 48430 Fundamentals of C Programming - Assignment 3
  * Name(s): MARSHALL SUTTON, CLEMENT MUTEZ, AIDAN LEE, DAVID AZOULAY
  * Student ID: 13583378
- * Date of submission:
- * A brief statement on what you could achieve (less than 50 words):
- * 
- * 
- * A brief statement on what you could NOT achieve (less than 50 words):
- * 
+ * Date of submission: 11/10/2019
  *
 *******************************************************************************/
 
@@ -50,7 +45,7 @@ int main(void)
                     );
                 } else {
                     printf("\n"
-                        "Error: Something went wrong.\n"
+                        "Error: something went wrong.\n"
                     );
                 }
                 break;

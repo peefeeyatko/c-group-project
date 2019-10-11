@@ -9,10 +9,14 @@ int ReadSize(char filename[]);
 int *AddTwoBit(int *bit1, int *bit2);
 void WriteDecryptedFile(char filename[], int *file, int size, int keynumber);
 
-/*function that read the bmp image and put each value on an array (so we can manipulate the value later)
- input: -file that contain the bmp image that we want to encrypt or manipulate
-        - size of the bmp image
- output: array that contain the value of the bmp image*/
+/*******************************************************************************
+ * function that read the bmp image and put each value on an array 
+ * (so we can manipulate the value later)
+ * inputs:
+ * - file that contain the bmp image, sizoe of bmp image
+ * outputs:
+ * - array that contain the value of the bmp image
+*******************************************************************************/
 int *readFile(char filename[], int size)
 {
     int *arrayfinal = NULL;           /*to initialize*/
@@ -29,7 +33,6 @@ int *readFile(char filename[], int size)
         {
             arrayfinal[i] = 0;
         }
-        /*printf("size ; %d", size); that line was to make sure we obtain the good size of the file*/
         fseek(fp, 0, SEEK_SET);
         /*to put the cursor at the beginning of the file*/
         for (l = 0; l < size; l++)
@@ -42,9 +45,13 @@ int *readFile(char filename[], int size)
     return arrayfinal; /*return the array that contain the value of the image*/
 }
 
-/*function that gives the size of a bmp image (to create an array of the good size later)
- input: file that contain the bmp image that we want to know the size
- output: size of the bmp image*/
+/*******************************************************************************
+ * Gives the size of a bmp image (to create an array of the good size later)
+ * inputs:
+ * - file that contain the bmp image that we want to know the size
+ * outputs:
+ * - size of the bmp image
+*******************************************************************************/
 int ReadSize(char filename[])
 {
     int array[6];           /*array that will takes the first 6 value of the file*/
@@ -81,12 +88,13 @@ int ReadSize(char filename[])
     return size; /*return the size of the file in int*/
 }
 
-/*void that creates a encrypted bmp image from a array
- input: -name of new bmp image created
-        -file that contain the bmp image that the user want to encrypt
-        -size of the file (so size of the array)
-        -keynumber is the number that we use to encrypt the file (between 0 and 255)
- output: no output*/
+/*******************************************************************************
+ * Write the encrypted image file
+ * inputs:
+ * - new filename, file that contains image, size of file, keynumber 
+ * outputs:
+ * - new encrypted image file
+*******************************************************************************/
 void WriteEncryptedFile(char filename[], int *file, int size, int keynumber)
 {
     int i;
@@ -123,6 +131,13 @@ void WriteEncryptedFile(char filename[], int *file, int size, int keynumber)
     fclose(fp);
 }
 
+/*******************************************************************************
+ * Write the decrypted image file
+ * inputs:
+ * - new filename, file that contains image, size of file, keynumber 
+ * outputs:
+ * - new image file
+*******************************************************************************/
 void WriteDecryptedFile(char filename[], int *file, int size, int keynumber)
 {
     int i;
@@ -158,9 +173,14 @@ void WriteDecryptedFile(char filename[], int *file, int size, int keynumber)
     fclose(fp);
 }
 
-/*use to do the conversion from endian to int, use to obtain the size (which is in endian)
- input: take a tab[4] that contain a endian number
- output: return the value in int*/
+/*******************************************************************************
+ * Used to do the conversion from endian to int, use to obtain the 
+ * size (which is in endian)
+ * inputs:
+ * - take a tab[4] that contain a endian number
+ * outputs:
+ * - return the value in int
+*******************************************************************************/
 int ConvertEndianToInt(const int array[4])
 {
     int value = 0;          /*value that will contain the convertion*/
@@ -174,9 +194,13 @@ int ConvertEndianToInt(const int array[4])
     return value; /*return the int that contain the endian number convert in int*/
 }
 
-/*use to do the conversion from bit to int
- input: take a tab[8] that contain a bit umber
- output: return the value in int*/
+/*******************************************************************************
+ * Used to do the conversion from bit to int
+ * inputs:
+ * - take a tab[8] that contain a bit number
+ * outputs:
+ * - the value in int
+*******************************************************************************/
 int ConvertBitToInt(int *tab)
 {
     int value = 0;
@@ -193,9 +217,13 @@ int ConvertBitToInt(int *tab)
     return value; /*return the int that contain the bit convert in int*/
 }
 
-/*use to do the conversion from int to bit
- input: take a int
- output: return a tab[8] that contain a bit*/
+/*******************************************************************************
+ * Used to do the conversion from int to bit
+ * inputs:
+ * - take a int
+ * outputs:
+ * - return a tab[8] that contain a bit
+*******************************************************************************/
 int *ConvertirIntToBit(int value)
 {
     int *array = malloc(8 * sizeof(int));
@@ -212,14 +240,13 @@ int *ConvertirIntToBit(int value)
     return array; /*return the array that contain the value convert in bit*/
 }
 
-/*use to do the addition of two bit, the addition follows this rules:
- 1+1 = 0;
- 0+0 = 0;
- 1+0 = 1;
- 0+1 = 1;
- this addition is use to encrypt the bmp image
- input: take two bit
- output: return the bit that contain the addition*/
+/*******************************************************************************
+ * This addition is use to encrypt the bmp image 
+ * inputs:
+ * - take two bit
+ * outputs:
+ * - return the bit that contain the addition
+*******************************************************************************/
 int *AddTwoBit(int *bit1, int *bit2)
 {
     int *value = malloc(8 * sizeof(int)); /*create the array that will contain the addition*/
@@ -249,11 +276,11 @@ int *AddTwoBit(int *bit1, int *bit2)
  * This function will take an image file and then encrypt it and output it 
  * to the encrypted directory.
  * inputs:
- * - BMP image file
+ * - none
  * outputs:
  * - encrypted BMP image file
 *******************************************************************************/
-void encrypt_image()
+void encrypt_image(void)
 {
     char filename[50];
     printf("Enter the filename (with extension) of an image to encrypt>\n");
@@ -284,11 +311,11 @@ void encrypt_image()
  * This function will take an encrypted file and then decrypt it and output 
  * it to the decrypted directory.
  * inputs:
- * - encrypted BMP image file
+ * - none
  * outputs:
  * - decrypted BMP image file
 *******************************************************************************/
-void decrypt_image()
+void decrypt_image(void)
 {
     char filename[50];
     printf("Enter the filename (with extension) of an image to decrypt>\n");

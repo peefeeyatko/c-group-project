@@ -13,8 +13,8 @@
 /*******************************************************************************
  * Function prototypes 
 *******************************************************************************/
-void encrypt_image();
-void decrypt_image();
+void encrypt_image(void);
+void decrypt_image(void);
 
 int *readFile(char filename[], int size);
 int convertEndianToInt(const int tab[4]);
