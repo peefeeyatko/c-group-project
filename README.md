@@ -13,7 +13,7 @@ Our solution to this problem will involve creating a C program to encrypt BMP im
 
 ##### Scope including main features for development;
  
-* Interacting with a menu system in a CLI
+* Interacting with a menu system through a CLI
 * Ability to encrypt one or more .bmp image files
 * Ability to decrypt one or more .bmp image files
 * Check for a password before decrypting  images
